@@ -4,7 +4,7 @@ use Faker\Factory as Faker;
 use Image;
 
 class ProcessImage
-{	
+{
 	/**
 	 * Save Image to the public folder
 	 *
@@ -15,7 +15,7 @@ class ProcessImage
 	public function execute($file, $path, $width, $height)
 	{
 		$filename = $this->rename($file);
-		Image::make($file)->resize($width, $height)->save($path.$filename);
+		Image::make($file)->resize($width, $height)->save($path.DIRECTORY_SEPARATOR.$filename);
 		return asset('images/profileimages/'.$filename);
 	}
 	/**
@@ -28,7 +28,7 @@ class ProcessImage
 	public function rename($file)
 	{
 		$faker = Faker::create();
-		 switch(exif_imagetype($file)) 
+		 switch(exif_imagetype($file))
 		 {
 		 	case IMAGETYPE_GIF : return $faker->sha1.'.gif';
 		 	break;
@@ -38,6 +38,6 @@ class ProcessImage
 		 	break;
 		 	case IMAGETYPE_BMP : return $faker->sha1.'.bmp';
 		 }
-	
+
 	}
 }
